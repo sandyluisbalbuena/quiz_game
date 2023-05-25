@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pokemon</title>
+    <link rel="icon" href="assets/images/misc/pokeball_loader.png">
+
+
+    <!-- Font Awesome -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet"/>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap" rel="stylesheet"/>
+    <!-- MDB -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.3.0/mdb.min.css"rel="stylesheet"/>
+    <!-- splide -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@splidejs/splide@4.1.4/dist/css/splide.min.css">
+    <!-- animate -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+    <!-- hover -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/hover.css/2.3.1/css/hover-min.css" integrity="sha512-csw0Ma4oXCAgd/d4nTcpoEoz4nYvvnk21a8VA2h2dzhPAvjbUIK6V3si7/g/HehwdunqqW18RwCJKpD7rL67Xg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <!-- mystyle -->
+    <link rel="stylesheet" href="assets/css/style.css">
+    <!-- sweetalert -->
+    <link href="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.5/dist/sweetalert2.min.css" rel="stylesheet">
+    <!-- datatables -->
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.4/css/jquery.dataTables.min.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/rowreorder/1.3.3/css/rowReorder.dataTables.min.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/responsive/2.4.1/css/responsive.dataTables.min.css">
+
+    <style>
+
+        .progress-bar {
+            height: 20px;
+            width: 100%;
+            background-color: #4caf50;
+            animation: decreaseProgress 5s linear forwards;
+        }
+
+        @keyframes decreaseProgress {
+            0% { width: 100%; }
+            100% { width: 0%; }
+        }
+
+        .restart-animation {
+            animation: decreaseProgress 5s linear forwards;
+        }
+
+        .remove-animation {
+            animation: none;
+        }
+
+    </style>
+
+
+</head>
+<body>
+
+    <!-- <div id="preloader-background">
+        <div id="preloader"></div>
+    </div> -->
+
+    <header>
+        <!-- Navbar -->
+        <nav class="navbar navbar-expand-lg  navbar-dark bg-dark fixed-top">
+            <div class="container-fluid">
+                <a class="navbar-brand mt-2 mt-lg-0" href="#">
+                    <img
+                        src="assets/images/brand/pokemonBrandName.png"
+                        height="30"
+                        alt="MDB Logo"
+                        loading="lazy"
+                    />
+                </a>
+                <button class="navbar-toggler" type="button" data-mdb-toggle="collapse" data-mdb-target="#navbarExample01" aria-controls="navbarExample01"aria-expanded="false" aria-label="Toggle navigation">
+                    <i class="fas fa-bars"></i>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarExample01">
+                    
+                </div>
+            </div>
+        </nav>
+        <!-- Navbar -->
+    </header>	
+	
+	<div class="p-5 text-center bg-image hero" style="background-image: url('assets/images/hero/hero.jpg'); height: 80vh; top:0;">
+		<div class="mask" style="background-color: rgba(0, 0, 0, 0.6);">
+			<div class="d-flex justify-content-center align-items-center h-100">
+				<div class="text-white">
+
+
+					<div class="container mt-5">
+                        <div class="mt-4 row">
+                            <div class="card mt-5 p-3 " style="border-radius: 5px;" id="secondCardstart">
+                                <!-- <form> -->
+                                    <input onkeydown="showstartbutton()" onchange="showstartbutton()" id="username"class="form-control rounded" placeholder="Enter your name" required/>
+                                    <div class="card-body container-fluid">
+                                        <button id="secondCardstartbtn" class="btn bg-dark" onclick="startGame()" style="display: none;" type="submit">Start</button>
+                                    </div>
+                                <!-- </form> -->
+                            </div>
+                        </div>
+                        <div style="display:none;" class="card my-4 px-1" style="border-radius: 5px;" id="secondCard">
+                            <div class="card-body container-fluid text-center">
+                                <div id="divFinalScore" class="row d-none"  style="color:black;">
+                                    <h4>Your Score:</h4> 
+                                    <h1>
+                                        <div id="finalScore">
+                                        </div>
+                                    </h1>
+                                    <button onclick="playAgain()" class="btn bg-dark mb-1">Play Again</button>
+                                    <button onclick="gameover()" class="btn bg-dark mb-1">Quit</button>
+                                </div>
+                                <div class="row">
+                                    <!-- <div id="progressBarFill" class="progress" role="progressbar" aria-label="Basic example" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100">
+                                        <div class="progress-bar w-100" ></div>
+                                    </div> -->
+                                    <!-- <div id="progressBar"></div> -->
+                                    <div id="questionsToAnswer" style="color:black;">
+                                    </div>
+                                </div>
+                                <div class="row mt-5">
+                                    <div class="row">
+                                        <div class="col-12" id="AnswertoQuestion">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+					</div>
+					<script>
+                        let questions = [
+                            ['Which animal is known as the "Ship of the Desert"?',['Camel_c', 'Dog', 'Cat', 'Girrafe']], 
+                            ['How many days are there in a week?',['7 Days_c', '3 Days', '5 Days', '365 Days']], 
+                            ['How many hours are there in a day?',['72 Hours', '24 Hours_c', '32 Hours', '10 Hours']], 
+                            ['How many letters are there in the English alphabet?', ['200 Letters', '24 Letters', '22 Letters', '26 Letters_c']], 
+                            ['Rainbow consist of how many colours?',['10 Colors', '7 Colors_c', '25 Colors', '32 Colors']],
+                            ['How many days are there in a year?',['365 days_c','500 days','245 days','355 days']],
+                            ['How many minutes are there in an hour?',['60 minutes_c','40 minutes','90 minutes','30 minutes']],
+                            ['How many seconds are there in a minute?',['60 seconds_c','40 seconds','45 seconds','35 seconds']],
+                            ['How many seconds make one hour?',['3600 seconds_c','5000 seconds','1200 seconds','10000 seconds']],
+                            ['Baby frog is known as.......',['Tadpole_c','Kerokero','Puppy','Kitten']],
+                            ['How many consonants are there in the English alphabet?',['21 Consonants_c','12 Consonants','24 Consonants','18 Consonants']],
+                            ['How many vowels are there in the English alphabet and name them?',['5 vowels namely a, e, i, o, and u._c','5 vowels namely a, b, k, d, and e.','5 vowels namely a, b, c, d, and e.','5 vowels namely z, y, x, w, and v.']],
+                            ['Which animal is known as the king of the jungle?',['Lion_c','Tiger','Dragon','Titan']],
+                            ['Name the National bird of India?',['Peacock_c','Rooster','Dove','Turkey']],
+                            ['Name the largest mammal?',['Blue Whale_c','Humpback Whale','Elephant','Sperm Whale']],
+                            ['Name the biggest continent in the world?',['Asia_c','Africa','North America','Antartica']],
+                            ['How many continents are there in the world?',['7_c','10','8','5']],
+                            ['Name the primary colours?',['Red, Yellow, and Blue_c','Blue, Red, and Green','Pink, Yellow, and Red','White, Black, and Pink']],
+                            ['Which is the smallest month of the year?',['February_c','July','March','May']],
+                            ['Name the house made of ice?',['Igloo_c','Pyramid','Tunnel','None of the above.']],
+                        ];
+                        let iterator = 0;
+                        let shuffledQuestions;
+                        let userScore = 0;
+
+                        function shuffleArray(array) {
+                            for (let i = array.length - 1; i > 0; i--) {
+                                const j = Math.floor(Math.random() * (i + 1));
+                                [array[i], array[j]] = [array[j], array[i]];
+                            }
+                            return array;
+                        }
+
+                        function gameover(){
+                            document.getElementById('secondCard').classList.remove('d-block');
+                            document.getElementById('secondCard').classList.add('d-none');
+                            document.getElementById('secondCardstart').classList.add('d-block');
+                            document.getElementById('secondCardstart').classList.remove('d-none');
+                            iterator = 0;
+                            userScore = 0;
+                            document.getElementById('divFinalScore').classList.add('d-none');
+                            document.getElementById('divFinalScore').classList.remove('d-block');
+                        }
+
+                        function playAgain(){
+                            iterator = 0;
+                            userScore = 0;
+                            document.getElementById('divFinalScore').classList.add('d-none');
+                            document.getElementById('divFinalScore').classList.remove('d-block');
+                            shuffledQuestions = shuffleArray(questions);
+                            showQuestionAndAnswer();
+						}
+
+                        function showstartbutton(){
+                            
+                            if(!document.getElementById('username').value == ""){
+                                document.getElementById('secondCardstartbtn').style.display="block";
+                                username = document.getElementById('username').value;
+                            }
+                            else{
+                                document.getElementById('secondCardstartbtn').style.display="none";
+                            }
+                        }
+
+						function startGame(){
+                            if(!document.getElementById('username').value == ""){
+                                document.getElementById('secondCardstart').classList.add('d-none');
+                                document.getElementById('secondCard').classList.add("d-block");
+                                document.getElementById('secondCard').classList.remove("d-none");
+                                document.getElementById('secondCard').style.display="block";
+                                shuffledQuestions = shuffleArray(questions);
+                                showQuestionAndAnswer();
+                            }
+                            else{
+                                Swal.fire('Wag makulit maglagay k ng name!!!')
+                            }
+						}
+
+                        function showQuestionAndAnswer(userpick){
+                            // let progressBar = document.getElementById('progressBarFill');
+
+                            if(userpick == 'c'){
+                                userScore++;
+                            }
+                            if(iterator < shuffledQuestions.length ){
+                                document.getElementById('AnswertoQuestion').innerHTML = "";
+                                document.getElementById('questionsToAnswer').textContent = shuffledQuestions[iterator][0];
+                                let shuffledAnswer = shuffleArray(shuffledQuestions[iterator][1]);
+                                shuffledAnswer.forEach(shuffledQuestionAnswer => {
+                                    if(shuffledQuestionAnswer.includes("_c")){
+                                        let ca = shuffledQuestionAnswer.replace('_c', "");
+                                        document.getElementById('AnswertoQuestion').innerHTML += '<button class="col-12 btn bg-dark mb-1" onclick="showQuestionAndAnswer(`c`)">'+ca+'</button>';
+                                    }
+                                    else{
+                                        document.getElementById('AnswertoQuestion').innerHTML += '<button class="col-12 btn bg-dark mb-1" onclick="showQuestionAndAnswer()">'+shuffledQuestionAnswer+'</button>';
+                                    }
+                                });
+                                iterator++;
+                                
+                            }
+                            else{
+                                document.getElementById('questionsToAnswer').textContent = "";
+                                document.getElementById('AnswertoQuestion').innerHTML = "";
+                                document.getElementById('finalScore').innerHTML = userScore;
+                                document.getElementById('divFinalScore').classList.remove('d-none');
+                                document.getElementById('divFinalScore').classList.add('d-block');
+                            }
+                            
+                            // progressBar.classList.add('remove-animation');
+                            // void progressBar.offsetWidth;
+                            // progressBar.classList.add('restart-animation');
+                        } 
+
+                        function endGame(){
+                            document.getElementById('secondCardstartbtn').style.display="none";
+                            document.getElementById('username').value="";
+
+                            if(scoreplayer > enemyplayer){
+                                Swal.fire('Your Score:'+scoreplayer+'\nEnemy Score:'+enemyplayer+'\n\nCongratulation!!!!\ntrainer '+username+'\n\nYou Won!!')
+                            }
+                            if(scoreplayer < enemyplayer){
+                                Swal.fire('Your Score:'+scoreplayer+'\nEnemy Score:'+enemyplayer+'\n\n\nYou Lose!!')
+                            }
+                            if(scoreplayer == enemyplayer){
+                                Swal.fire('Your Score:'+scoreplayer+'\nEnemy Score:'+enemyplayer+'\n\n\nDraw!!')
+                            }
+                            username="";
+                            document.getElementById('enemypick').innerHTML="";
+                            document.getElementById('enemypicklogo').innerHTML="";
+                            document.getElementById('result').innerHTML="";
+                            scoreplayer = 0;
+                            enemyplayer = 0;
+                            document.getElementById('scoreenemy').textContent=enemyplayer;
+                            document.getElementById('scoreplayer').textContent=scoreplayer;
+							document.getElementById('secondCardstart').style.display = "block";
+							document.getElementById('secondCard').style.display = "none";
+                            
+						}
+
+						function getRandomElement(array) {
+							const randomIndex = Math.floor(Math.random() * array.length);
+							return array[randomIndex];
+						}
+
+                        function decreaseProgressBar(duration) {
+                            const progressBar = document.getElementById('progressBarFill');
+                            let progress = 100;
+                            const intervalTime = duration / progress;
+
+                            const intervalId = setInterval(() => {
+                                progress--;
+                                progressBar.style.width = progress + '%';
+
+                                if (progress <= 0) {
+                                clearInterval(intervalId);
+                                }
+                            }, intervalTime);
+                        }
+
+                        // const progressBarFill = document.getElementById('progressBarFill');
+                        // const progressAnimationEndHandler = () => {
+                        //     let progressBar = document.getElementById('progressBarFill');
+                        //     new Promise((resolve) => {
+                        //         if (progressBarFill.classList.contains('restart-animation')) {
+                        //             // The element has the 'restart-animation' class
+                        //             progressBar.classList.remove('restart-animation');
+                        //         } 
+                        //     setTimeout(() => resolve(), 500); // Delay execution by 3 seconds
+                        //     }).then(() => {
+                        //         console.log('Animation completed.');
+                        //         showQuestionAndAnswer();
+                        //     });
+                        // };
+                        // progressBarFill.addEventListener('animationend', progressAnimationEndHandler);
+					</script>
+				</div>
+			</div>
+		</div>
+	</div>
+
+    <!-- <main class="container-fluid">
+		<section>
+			<div class="row">
+				<div class="splide">
+					<div class="splide__track">
+						<ul class="splide__list">
+							
+						</ul>
+					</div>
+				</div>
+			</div>
+		</section>
+	</main> -->
+
+	<button id="scrollButton" class="scroll-button bg-dark rounded-circle  text-white" style="display: none;"><i class="fa-solid fa-arrow-up"></i></button>
+
+    <footer class="bg-dark text-center text-white">
+        <div class="container p-4 pb-0">
+            <section class="my-4">
+                <div>
+                    <a class="btn btn-outline-light btn-floating m-1" href="#!" role="button"><i class="fab fa-facebook-f"></i></a>
+                    <a class="btn btn-outline-light btn-floating m-1" href="#!" role="button"><i class="fab fa-twitter"></i></a>
+                    <a class="btn btn-outline-light btn-floating m-1" href="#!" role="button"><i class="fab fa-google"></i></a>
+                    <a class="btn btn-outline-light btn-floating m-1" href="#!" role="button"><i class="fab fa-instagram"></i></a>
+                    <a class="btn btn-outline-light btn-floating m-1" href="#!" role="button"><i class="fab fa-linkedin-in"></i></a>
+                    <a class="btn btn-outline-light btn-floating m-1" href="#!" role="button"><i class="fab fa-github"></i></a>
+                </div>
+            </section>
+        </div>
+        <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2);">© 2020 Copyright:
+            <a class="text-white" href="https://sandy-luis-balbuena.epizy.com/">sandy-luis-balbuena.epizy.com</a>
+        </div>
+    </footer>
+
+	<!-- jquery -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.0/jquery.min.js" integrity="sha512-3gJwYpMe3QewGELv8k/BX9vcqhryRdzRMxVfq6ngyWXwo03GFEzjsUm8Q7RZcHPHksttq7/GFoxjCVUjkjvPdw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <!-- MDB -->
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.3.0/mdb.min.js"></script>
+
+	<script src="https://cdn.jsdelivr.net/npm/@splidejs/splide@4.1.4/dist/js/splide.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@splidejs/splide-extension-auto-scroll@0.5.3/dist/js/splide-extension-auto-scroll.min.js"></script>
+    <!-- axios -->
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <!-- sweetalert -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.5/dist/sweetalert2.all.min.js"></script>
+
+</body>
+</html>
